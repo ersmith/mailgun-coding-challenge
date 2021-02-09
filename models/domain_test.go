@@ -44,7 +44,7 @@ func TestBouncedResultsInNoCatchall(t *testing.T) {
 	fetchedDomain, err := GetDomain(dbPool, zap.NewNop().Sugar(), domainName)
 
 	assert.Nil(t, err)
-	assert.Equal(t, IsNotCatchAllStatus, fetchedDomain.IsCatchAll())
+	assert.Equal(t, IsNotCatchAllStatus, fetchedDomain.CatchAll())
 }
 
 func TestDomainResultsInUnknownCatchallNoData(t *testing.T) {
@@ -54,7 +54,7 @@ func TestDomainResultsInUnknownCatchallNoData(t *testing.T) {
 	fetchedDomain, err := GetDomain(dbPool, zap.NewNop().Sugar(), domainName)
 
 	assert.Nil(t, err)
-	assert.Equal(t, UnknownCatchAllStatus, fetchedDomain.IsCatchAll())
+	assert.Equal(t, UnknownCatchAllStatus, fetchedDomain.CatchAll())
 }
 
 func TestDomainResultsInUnknownCatchallWithDelivered(t *testing.T) {
@@ -71,7 +71,7 @@ func TestDomainResultsInUnknownCatchallWithDelivered(t *testing.T) {
 	fetchedDomain, err := GetDomain(dbPool, zap.NewNop().Sugar(), domainName)
 
 	assert.Nil(t, err)
-	assert.Equal(t, UnknownCatchAllStatus, fetchedDomain.IsCatchAll())
+	assert.Equal(t, UnknownCatchAllStatus, fetchedDomain.CatchAll())
 }
 
 func TestDomainIsCatchAllTrueWithManyDelivered(t *testing.T) {
@@ -88,7 +88,7 @@ func TestDomainIsCatchAllTrueWithManyDelivered(t *testing.T) {
 	fetchedDomain, err := GetDomain(dbPool, zap.NewNop().Sugar(), domainName)
 
 	assert.Nil(t, err)
-	assert.Equal(t, IsCatchAllStatus, fetchedDomain.IsCatchAll())
+	assert.Equal(t, IsCatchAllStatus, fetchedDomain.CatchAll())
 }
 
 func TestDomainIsCatchAllFalseWithManyDeliveredAndBounced(t *testing.T) {
@@ -105,5 +105,5 @@ func TestDomainIsCatchAllFalseWithManyDeliveredAndBounced(t *testing.T) {
 	fetchedDomain, err := GetDomain(dbPool, zap.NewNop().Sugar(), domainName)
 
 	assert.Nil(t, err)
-	assert.Equal(t, IsNotCatchAllStatus, fetchedDomain.IsCatchAll())
+	assert.Equal(t, IsNotCatchAllStatus, fetchedDomain.CatchAll())
 }

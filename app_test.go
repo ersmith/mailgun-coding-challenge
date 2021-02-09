@@ -31,7 +31,7 @@ func TestGetDomainNewDomain(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	expected := fmt.Sprintf(`{"Id":0,"DomainName":"%v","Delivered":0,"Bounced":0,"IsCatchAll":"unknown"}`, domainName)
+	expected := fmt.Sprintf(`{"id":0,"domain_name":"%v","delivered":0,"bounced":0,"catch_all":"unknown"}`, domainName)
 	if strings.TrimSpace(rr.Body.String()) != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			rr.Body.String(), expected)
@@ -63,7 +63,7 @@ func TestGetDomainWithExistingDomainDelivered(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	expected := fmt.Sprintf(`{"Id":%d,"DomainName":"%v","Delivered":1,"Bounced":0,"IsCatchAll":"unknown"}`, domain.Id, domainName)
+	expected := fmt.Sprintf(`{"id":%d,"domain_name":"%v","delivered":1,"bounced":0,"catch_all":"unknown"}`, domain.Id, domainName)
 	if strings.TrimSpace(rr.Body.String()) != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			rr.Body.String(), expected)
@@ -95,7 +95,7 @@ func TestGetDomainWithExistingDomainBounced(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	expected := fmt.Sprintf(`{"Id":%d,"DomainName":"%v","Delivered":0,"Bounced":1,"IsCatchAll":"%s"}`,
+	expected := fmt.Sprintf(`{"id":%d,"domain_name":"%v","delivered":0,"bounced":1,"catch_all":"%s"}`,
 		domain.Id,
 		domainName,
 		models.IsNotCatchAllStatus)

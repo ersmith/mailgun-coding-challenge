@@ -17,20 +17,20 @@ const (
 )
 
 type Domain struct {
-	Id         int
-	DomainName string
-	Delivered  int
-	Bounced    int
+	Id         int    `json:"id"`
+	DomainName string `json:"domain_name"`
+	Delivered  int    `json:"delivered"`
+	Bounced    int    `json:"bounced"`
 }
 
 // Strut which contains additional fields desired in the JSON output.
 type domainJson struct {
 	Domain
-	IsCatchAll CatchAllStatus
+	CatchAll CatchAllStatus `json:"catch_all"`
 }
 
 // Returns whether the domain is a catch all domain or not
-func (self *Domain) IsCatchAll() CatchAllStatus {
+func (self *Domain) CatchAll() CatchAllStatus {
 	if self.Id == 0 {
 		return UnknownCatchAllStatus
 	} else if self.Bounced > 0 {
@@ -59,8 +59,6 @@ func GetDomain(pool *pgxpool.Pool, logger *zap.SugaredLogger, domainName string)
 		DomainName: domainName,
 	}
 
-	fmt.Print(domainName)
-
 	if err != nil {
 		logger.Errorf("Failed to get domain with error: %v", err, zap.String("domain", domainName))
 		return nil, err
@@ -82,8 +80,8 @@ func GetDomain(pool *pgxpool.Pool, logger *zap.SugaredLogger, domainName string)
 // Returns a struct to be used as a Json serialization
 func (self *Domain) Json() *domainJson {
 	return &domainJson{
-		Domain:     *self,
-		IsCatchAll: self.IsCatchAll(),
+		Domain:   *self,
+		CatchAll: self.CatchAll(),
 	}
 }
 

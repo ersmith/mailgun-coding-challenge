@@ -91,18 +91,11 @@ func (self *App) initializeRouter() {
 func (self *App) putEventDeliveredHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	domainName := vars["domain"]
-	err := self.validate.Var(domainName, "fqdn")
-
-	if err != nil {
-		self.Logger.Infow("bad domain name", zap.Error(err), zap.String("domain", domainName))
-		badRequest(w)
-		return
-	}
 
 	self.Logger.Infow("Delivered event", zap.String("domain", domainName))
 	domain := models.Domain{}
 	domain.DomainName = domainName
-	err = domain.IncrementDelivered(self.dbPool)
+	err := domain.IncrementDelivered(self.dbPool)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return

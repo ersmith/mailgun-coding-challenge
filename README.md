@@ -55,4 +55,3 @@ Load testing scripts can be seen under the `load_testing` directory. The README.
 * To get docker-compose working as a single command, you could add a script that waits for the DB. The issue is always having that script in the docker container would not be ideal as it would run everywhere, creating one more potential point of fail during container startup in production.
 * Tests could be optimized a lot with additional helper functions.
 * Test coverage currently focuses on happy pathn, but should ideally be expanded to cover all validation and error conditions.
-* Not a huge fan of having everything title case for JSON responses, but it was the default and works fine.
