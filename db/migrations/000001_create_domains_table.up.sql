@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS domains (
+  id SERIAL PRIMARY KEY,
+  domain_name VARCHAR(255) NOT NULL UNIQUE,
+  delivered INT DEFAULT 0,
+  bounced INT DEFAULT 0
+);
